@@ -32,7 +32,11 @@ func (c *customerUsecase) Login(email string, password string) (string, error) {
 
 	for _, customer := range customers {
 		if customer.Email == email && bcrypt.CompareHashAndPassword([]byte(customer.Password), []byte(password)) == nil {
-			return services.GenerateJWT(customer.ID)
+			token, err := services.GenerateJWT(customer.ID)
+			if err != nil {
+				return "", errors.New("failed to generate token")
+			}
+			return token, nil
 		}
 	}
 

@@ -22,6 +22,7 @@ func (c *CustomerController) RegisterRoutes(router *gin.RouterGroup) {
 	{
 		customer.POST("/register", c.RegisterCustomer)
 		customer.POST("/login", c.LoginCustomer)
+		customer.POST("/logout", c.LogoutCustomer)
 	}
 }
 
@@ -63,5 +64,17 @@ func (c *CustomerController) LoginCustomer(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"token": token})
+	ctx.SetCookie("token", token, 3600, "/", "localhost", false, true)
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": "customer login successfully",
+		"token":   token,
+	})
+}
+
+func (c *CustomerController) LogoutCustomer(ctx *gin.Context) {
+	ctx.SetCookie("token", "", -1, "/", "localhost", false, true)
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": "customer logout successfully",
+	})
 }
