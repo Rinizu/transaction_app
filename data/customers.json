@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "name": "Ryan Fattah",
+    "email": "ryan@example.com",
+    "password": "$2a$10$Zx5Gxz5CBBdOs8piuJ1Gp.O5FM4hm9p7V6GHI2TXFyOLZmZIIdvuG",
+    "balance": 1000000
+  },
+  {
+    "id": 6298,
+    "name": "customer2",
+    "email": "customer2@example.com",
+    "password": "$2a$10$WzpoLTdRe3sY2K5t2POaWuZTAK9xG9mdkPCK2lKCzsvlRUj6vQTiS",
+    "balance": 1000000
+  }
+]

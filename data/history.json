@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "id": 88721,
+    "customer_id": 6298,
+    "merchant_id": 1,
+    "amount": 100000,
+    "timestamp": "2024-11-25T14:42:37.019886+07:00"
+  },
+  {
+    "id": 84419,
+    "customer_id": 6298,
+    "merchant_id": 1,
+    "amount": 100000,
+    "timestamp": "2024-11-25T14:43:26.993304+07:00"
+  },
+  {
+    "id": 89546,
+    "customer_id": 6298,
+    "merchant_id": 1,
+    "amount": 100000,
+    "timestamp": "2024-11-25T14:43:34.623315+07:00"
+  }
+]

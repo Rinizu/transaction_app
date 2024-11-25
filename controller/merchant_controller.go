@@ -18,10 +18,7 @@ func NewMerchantController(merhantUC usecase.MerchantUsecase) *MerchantControlle
 }
 
 func (m *MerchantController) RegisterRoutes(router *gin.RouterGroup) {
-	api := router.Group("/api")
-	{
-		api.GET("/merchants", m.GetMerchants)
-	}
+	router.GET("/merchants", m.GetMerchants)
 }
 
 func (m *MerchantController) GetMerchants(ctx *gin.Context) {

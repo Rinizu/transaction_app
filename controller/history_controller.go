@@ -17,7 +17,7 @@ func NewHistoryController(historyUC usecase.HistoryUsecase) *HistoryController {
 	}
 }
 
-func (h *HistoryController) RegisterRoutes(router *gin.Engine) {
+func (h *HistoryController) RegisterRoutes(router *gin.RouterGroup) {
 	router.POST("/transaction", h.CreateTransaction)
 }
 
@@ -30,6 +30,11 @@ func (h *HistoryController) CreateTransaction(ctx *gin.Context) {
 
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if req.Amount <= 0 {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "amount must be greater than 0"})
 		return
 	}
 

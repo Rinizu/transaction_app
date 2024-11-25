@@ -1,0 +1,13 @@
+[
+    {
+        "id":1,
+        "name":"Merchant A",
+        "category":"Electronics"
+    },
+
+    {
+        "id":2,
+        "name":"Merchant B",
+        "category":"Clothing"
+    }
+]

@@ -1,9 +1,0 @@
-[
-    {
-        "id": 1,
-        "name":"Ryan Fattah",
-        "email":"ryan@example.com",
-        "password":"$2a$10$Zx5Gxz5CBBdOs8piuJ1Gp.O5FM4hm9p7V6GHI2TXFyOLZmZIIdvuG",
-        "balance": 1000000.0
-    }
-]
