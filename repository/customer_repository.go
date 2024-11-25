@@ -2,6 +2,7 @@ package repository
 
 import (
 	"encoding/json"
+	"errors"
 	"os"
 	"transaction_app/entities"
 )
@@ -36,7 +37,7 @@ func (c *customerRepository) ReadCustomers() ([]entities.Customer, error) {
 func (c *customerRepository) WriteCustomers(customers []entities.Customer) error {
 	data, err := json.MarshalIndent(customers, "", "  ")
 	if err != nil {
-		return err
+		return errors.New("failed to marshal customer file")
 	}
 
 	return os.WriteFile(c.customerFile, data, os.ModePerm)

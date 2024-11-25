@@ -2,6 +2,7 @@ package repository
 
 import (
 	"encoding/json"
+	"errors"
 	"os"
 	"transaction_app/entities"
 )
@@ -25,18 +26,18 @@ func (h *historyRepository) LogHistory(history entities.History) error {
 
 	data, err := os.ReadFile(h.historyFile)
 	if err != nil {
-		return err
+		return errors.New("history file not found")
 	}
 
 	err = json.Unmarshal(data, &histories)
 	if err != nil {
-		return err
+		return errors.New("failed to unmarshal history file")
 	}
 
 	histories = append(histories, history)
 	data, err = json.MarshalIndent(histories, "", "  ")
 	if err != nil {
-		return err
+		return errors.New("failed to marshal history file")
 	}
 
 	return os.WriteFile(h.historyFile, data, os.ModePerm)

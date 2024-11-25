@@ -3,7 +3,9 @@ package main
 import (
 	"log"
 	"transaction_app/config"
+	"transaction_app/controller"
 	"transaction_app/repository"
+	"transaction_app/usecase"
 
 	"github.com/gin-gonic/gin"
 )
@@ -17,14 +19,21 @@ func main() {
 
 	customerUC := usecase.NewCustomerUsecase(customerRepo)
 	merchantUC := usecase.NewMerchantUsecase(merchantRepo)
-	historyUC := usecase.NewHistoryUsecase(historyRepo)
+	historyUC := usecase.NewHistoryUsecase(customerRepo, merchantRepo, historyRepo)
 
-	h := handler.NewHandler(customerUC, merchantUC, historyUC)
+	customerController := controller.NewCustomerController(customerUC)
+	merchantController := controller.NewMerchantController(merchantUC)
+	historyController := controller.NewHistoryController(historyUC)
 
 	router := gin.Default()
-	h.RegisterRoutes(router)
+	api := router.Group("/api")
+	{
+		customerController.RegisterRoutes(api)
+		merchantController.RegisterRoutes(api)
+		historyController.RegisterRoutes(api)
+	}
 
-	log.Println("Server is running on port 8080")
+	log.Printf("Server is running on port 8080")
 	if err := router.Run(":8080"); err != nil {
 		log.Fatal(err)
 	}
