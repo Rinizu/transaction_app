@@ -19,5 +19,26 @@
     "merchant_id": 1,
     "amount": 100000,
     "timestamp": "2024-11-25T14:43:34.623315+07:00"
+  },
+  {
+    "id": 92746,
+    "customer_id": 6298,
+    "merchant_id": 1,
+    "amount": 1000,
+    "timestamp": "2024-11-25T18:05:04.634504+07:00"
+  },
+  {
+    "id": 88539,
+    "customer_id": 1,
+    "merchant_id": 1,
+    "amount": 1000,
+    "timestamp": "2024-11-25T18:05:47.251066+07:00"
+  },
+  {
+    "id": 60913,
+    "customer_id": 1,
+    "merchant_id": 1,
+    "amount": 1000,
+    "timestamp": "2024-11-25T18:05:48.225544+07:00"
   }
 ]

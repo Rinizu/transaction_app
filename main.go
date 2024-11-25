@@ -21,17 +21,10 @@ func main() {
 	merchantUC := usecase.NewMerchantUsecase(merchantRepo)
 	historyUC := usecase.NewHistoryUsecase(customerRepo, merchantRepo, historyRepo)
 
-	customerController := controller.NewCustomerController(customerUC)
-	merchantController := controller.NewMerchantController(merchantUC)
-	historyController := controller.NewHistoryController(historyUC)
+	ctrl := controller.NewController(customerUC, merchantUC, historyUC)
 
 	router := gin.Default()
-	api := router.Group("/api")
-	{
-		customerController.RegisterRoutes(api)
-		merchantController.RegisterRoutes(api)
-		historyController.RegisterRoutes(api)
-	}
+	ctrl.RegisterRoutes(router)
 
 	log.Printf("Server is running on port 8080")
 	if err := router.Run(":8080"); err != nil {

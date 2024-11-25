@@ -7,9 +7,10 @@ import (
 )
 
 type Controller struct {
-	CustomerController *CustomerController
-	MerchantController *MerchantController
-	HistoryController  *HistoryController
+	CustomerController    *CustomerController
+	MerchantController    *MerchantController
+	TransactionController *TransactionController
+	HistoryController     *HistoryController
 }
 
 func NewController(
@@ -18,9 +19,10 @@ func NewController(
 	historyUC usecase.HistoryUsecase,
 ) *Controller {
 	return &Controller{
-		CustomerController: NewCustomerController(customerUC),
-		MerchantController: NewMerchantController(merchantUC),
-		HistoryController:  NewHistoryController(historyUC),
+		CustomerController:    NewCustomerController(customerUC),
+		MerchantController:    NewMerchantController(merchantUC),
+		TransactionController: NewTransactionController(historyUC),
+		HistoryController:     NewHistoryController(historyUC),
 	}
 }
 
@@ -29,6 +31,7 @@ func (c *Controller) RegisterRoutes(router *gin.Engine) {
 	{
 		c.CustomerController.RegisterRoutes(api)
 		c.MerchantController.RegisterRoutes(api)
+		c.TransactionController.RegisterRoutes(api)
 		c.HistoryController.RegisterRoutes(api)
 	}
 }

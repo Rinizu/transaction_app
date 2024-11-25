@@ -12,5 +12,12 @@
     "email": "customer2@example.com",
     "password": "$2a$10$WzpoLTdRe3sY2K5t2POaWuZTAK9xG9mdkPCK2lKCzsvlRUj6vQTiS",
     "balance": 1000000
+  },
+  {
+    "id": 53406,
+    "name": "customer3",
+    "email": "customer3@example.com",
+    "password": "$2a$10$LiqV0Oe/MLouLZe7lJAnvuXZrQMIe53U1rSOi4214c962Pex2Bq5m",
+    "balance": 0
   }
 ]

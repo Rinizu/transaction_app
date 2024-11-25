@@ -8,6 +8,7 @@ import (
 )
 
 type HistoryRepository interface {
+	ReadHistory() ([]entities.History, error)
 	LogHistory(history entities.History) error
 }
 
@@ -19,6 +20,23 @@ func NewHistoryRepository(historyFile string) HistoryRepository {
 	return &historyRepository{
 		historyFile: historyFile,
 	}
+}
+
+func (h *historyRepository) ReadHistory() ([]entities.History, error) {
+	var histories []entities.History
+	file, err := os.Open(h.historyFile)
+	if err != nil {
+		return nil, errors.New("history file not found")
+	}
+
+	defer file.Close()
+
+	decoder := json.NewDecoder(file)
+	if err := decoder.Decode(&histories); err != nil {
+		return nil, errors.New("failed to unmarshal history file")
+	}
+
+	return histories, nil
 }
 
 func (h *historyRepository) LogHistory(history entities.History) error {

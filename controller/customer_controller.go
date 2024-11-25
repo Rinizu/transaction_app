@@ -33,7 +33,8 @@ func (c *CustomerController) RegisterCustomer(ctx *gin.Context) {
 	}
 
 	if err := ctx.ShouldBindJSON(&req); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"messsage": "name, email and password are required"})
 		return
 	}
 

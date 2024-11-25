@@ -10,6 +10,8 @@ import (
 
 type HistoryUsecase interface {
 	CreateTransaction(customerID, merchantID int, amount float64) error
+	GetHistoryByCustomerID(customerID int) ([]entities.History, error)
+	GetAllHistory() ([]entities.History, error)
 }
 
 type historyUsecase struct {
@@ -85,4 +87,33 @@ func (h *historyUsecase) CreateTransaction(customerID, merchantID int, amount fl
 	}
 
 	return h.historyRepo.LogHistory(history)
+}
+
+func (h *historyUsecase) GetHistoryByCustomerID(customerID int) ([]entities.History, error) {
+	histories, err := h.historyRepo.ReadHistory()
+	if err != nil {
+		return nil, err
+	}
+
+	var customerHistories []entities.History
+	for _, history := range histories {
+		if history.CustomerID == customerID {
+			customerHistories = append(customerHistories, history)
+		}
+	}
+
+	if len(customerHistories) == 0 {
+		return nil, errors.New("No transaction history found for the customer")
+	}
+
+	return customerHistories, nil
+}
+
+func (h *historyUsecase) GetAllHistory() ([]entities.History, error) {
+	histories, err := h.historyRepo.ReadHistory()
+	if err != nil {
+		return nil, err
+	}
+
+	return histories, nil
 }
