@@ -40,5 +40,12 @@
     "merchant_id": 1,
     "amount": 1000,
     "timestamp": "2024-11-25T18:05:48.225544+07:00"
+  },
+  {
+    "id": 74823,
+    "customer_id": 6298,
+    "merchant_id": 1,
+    "amount": 10000,
+    "timestamp": "2024-11-25T19:02:48.896586+07:00"
   }
 ]

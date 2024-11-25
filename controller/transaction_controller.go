@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"transaction_app/middleware"
 	"transaction_app/usecase"
 
 	"github.com/gin-gonic/gin"
@@ -18,10 +19,22 @@ func NewTransactionController(transactionUC usecase.HistoryUsecase) *Transaction
 }
 
 func (t *TransactionController) RegisterRoutes(router *gin.RouterGroup) {
-	router.POST("/transaction", t.CreateTransaction)
+	transaction := router.Group("/transaction")
+	transaction.Use(middleware.CustomerAuthMiddleware())
+	{
+		transaction.POST("", t.CreateTransaction)
+	}
 }
 
 func (t *TransactionController) CreateTransaction(ctx *gin.Context) {
+	customerID, exists := ctx.Get("customer_id")
+	if !exists {
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			"error": "Customer ID not found",
+		})
+		return
+	}
+
 	var req struct {
 		CustomerID int     `json:"customer_id" binding:"required"`
 		MerchantID int     `json:"merchant_id" binding:"required"`
@@ -31,6 +44,13 @@ func (t *TransactionController) CreateTransaction(ctx *gin.Context) {
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
+		})
+		return
+	}
+
+	if req.CustomerID != customerID {
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			"error": "Unauthorized to perform this transaction",
 		})
 		return
 	}

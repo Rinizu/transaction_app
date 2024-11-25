@@ -1,11 +1,11 @@
 package services
 
 import (
+	"errors"
 	"os"
 	"time"
 
 	"github.com/golang-jwt/jwt"
-	"golang.org/x/exp/rand"
 )
 
 var jwtSecret = []byte(os.Getenv("JWT_SECRET"))
@@ -20,16 +20,27 @@ func GenerateJWT(customerID int) (string, error) {
 	return token.SignedString(jwtSecret)
 }
 
-func ValidateJWT(tokenString string) (*jwt.Token, error) {
-	return jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+func ParseJWT(tokenString string) (map[string]interface{}, error) {
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, jwt.NewValidationError("unexpected signing method", jwt.ValidationErrorSignatureInvalid)
+			return nil, errors.New("unexpected signing method")
 		}
 		return jwtSecret, nil
 	})
-}
 
-func GenerateID() int {
-	rand.Seed(uint64(time.Now().UnixNano()))
-	return rand.Intn(100000)
+	if err != nil {
+		return nil, err
+	}
+
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok || !token.Valid {
+		return nil, errors.New("invalid token")
+	}
+
+	result := make(map[string]interface{})
+	for key, value := range claims {
+		result[key] = value
+	}
+
+	return result, nil
 }
