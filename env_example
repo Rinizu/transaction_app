@@ -3,5 +3,3 @@ JWT_SECRET=your_jwt_secret
 CUSTOMER_FILE=./data/customers.json
 MERCHANT_FILE=./data/merchants.json
 HISTORY_FILE=./data/history.json
-
-SERVER_PORT=8080
